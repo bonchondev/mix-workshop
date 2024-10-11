@@ -39,11 +39,18 @@ defmodule BinaryTree do
         }
       }
   """
+  @spec insert(BinaryTree, any()) :: BinaryTree
   def insert(tree, value) do
+    cond do
+      tree.root == nil -> %BinaryTree {root: %Node { value: value}}
+      tree.root.left == nil -> %BinaryTree {root: %Node { tree.root | left: value}}
+      tree.root.right == nil -> %BinaryTree {root: %Node { tree.root | right: value}}
+    end
   end
 
   @doc false
   def insert_node(node, value) do
+
   end
 
   @doc """

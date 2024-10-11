@@ -25,5 +25,10 @@ defmodule ListFlattener do
       []
   """
   def flatten(list) do
+    case list do
+      [] -> []
+      [head | tail] when is_list(head) -> flatten(head) ++ flatten(tail)
+      [head | tail] -> [head | flatten(tail)]
+    end
   end
 end

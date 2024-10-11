@@ -31,6 +31,9 @@ defmodule DistanceCalculator do
       [2.23606797749979, 5.0, 3.0, 4.0, 0.0]
   """
   def distances_from_origin(coords) do
+    coords
+    |> Enum.map(fn coord -> calculate_distance(coord)
+    end)
   end
 
   @doc """
@@ -65,5 +68,18 @@ defmodule DistanceCalculator do
   """
 
   def calculate_distance(coords) do
+    case coords do
+      {nil, nil} ->
+        0
+
+      {x, nil} ->
+        x
+
+      {nil, y} ->
+        y
+
+      {x, y} ->
+        :math.sqrt(Integer.pow(x, 2) + Integer.pow(y, 2))
+    end
   end
 end

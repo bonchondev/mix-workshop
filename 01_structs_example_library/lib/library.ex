@@ -13,7 +13,13 @@ defmodule Library do
       iex> create_author("Jane Austen", 1775)
       %Author{name: "Jane Austen", birth_year: 1775}
   """
+  defmodule Author do
+    defstruct name: "", birth_year: 0
+  end
+
+  @spec create_author(binary(), integer()) :: %Author{}
   def create_author(name, birth_year) do
+    %Author{name: name, birth_year: birth_year}
   end
 
   @doc """
@@ -32,7 +38,13 @@ defmodule Library do
       iex> create_book("Pride and Prejudice", author, 1813)
       %Book{title: "Pride and Prejudice", author: %Author{name: "Jane Austen", birth_year: 1775}, published_year: 1813}
   """
+  defmodule Book do
+    defstruct title: "", author: nil, published_year: 0
+  end
+
+  @spec create_book(binary(), %Author{}, integer()) :: %Book{}
   def create_book(title, author, published_year) do
+    %Book{title: title, author: author, published_year: published_year}
   end
 
   @doc """
@@ -50,7 +62,9 @@ defmodule Library do
       iex> update_published_year(book, 1815)
       %Book{title: "Pride and Prejudice", author: %Author{name: "Jane Austen", birth_year: 1775}, published_year: 1815}
   """
+  @spec update_published_year(%Book{}, integer()) :: %Book{}
   def update_published_year(book, published_year) do
+    %Book{book | published_year: published_year}
   end
 
   @doc """
@@ -70,6 +84,11 @@ defmodule Library do
       iex> list_books(books)
       ["Pride and Prejudice by Jane Austen, published in 1813", "Moby Dick by Herman Melville, published in 1851"]
   """
+  @spec list_books([%Book{}]) :: [binary()]
   def list_books(books) do
+    books
+    |> Enum.map(fn book ->
+      "#{book.title} by #{book.author.name}, published in #{book.published_year}"
+    end)
   end
 end
